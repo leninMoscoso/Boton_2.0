@@ -1,0 +1,38 @@
+Sub Buscar()
+'
+''BUSCAR 2.0'
+' Busca y marca la celda del numero de autorizacion consultado. Lenin Moscoso.
+'
+' Acceso directo: Ctrl+Mayús+B
+'
+On Error GoTo en_caso_de_error
+
+Dim autorizacion As String
+autorizacion = ""
+
+Do
+    Do While autorizacion <> "x"
+        autorizacion = InputBox("AUTORIZACION:")
+        If autorizacion = "x" Then Exit Sub
+    
+        Cells.Find(What:=autorizacion, After:=ActiveCell, LookIn:=xlValues, LookAt:= _
+        xlPart, SearchOrder:=xlByColumns, SearchDirection:=xlNext, MatchCase:=False _
+        , SearchFormat:=False).Activate
+           
+        If ActiveCell.Interior.Color = 5296274 Then
+        MsgBox "YA ESTA MARCADA."
+        
+        Else
+            With Selection.Interior
+             .Pattern = xlSolid
+             .PatternColorIndex = xlAutomatic
+             .Color = 5296274
+             .TintAndShade = 0
+             .PatternTintAndShade = 0
+            End With
+        End If
+    Loop
+Loop Until autorizacion = "x"
+en_caso_de_error:
+    MsgBox "NO ENCONTRADO"
+End Sub
